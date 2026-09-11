@@ -1,413 +1,104 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 :root {
-    --ink: #3e2b32;
-    --muted: #806d73;
-    --paper: #f1ebeb;
-    --surface: #fffafa;
-    --line: #decfd2;
-    --plum: #8f4d65;
-    --plum-dark: #713b50;
-    --orange: #ea804c;
-    --shadow: 0 18px 60px rgba(96, 55, 70, .14);
+  --ink: #3e2b32;
+  --muted: #806d73;
+  --paper: #f1ebeb;
+  --surface: #fffafa;
+  --line: #decfd2;
+  --plum: #8f4d65;
+  --plum-dark: #713b50;
+  --orange: #ea804c;
+  --shadow: 0 18px 60px rgba(96, 55, 70, .14);
 }
 
-* {
-    box-sizing: border-box;
-}
-
-html {
-    min-width: 320px;
-}
-
-body {
-    margin: 0;
-    color: var(--ink);
-    background: var(--paper);
-    font-family: 'DM Sans', sans-serif;
-}
-
-button,
-input {
-    font: inherit;
-}
-
-button {
-    cursor: pointer;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
+* { box-sizing: border-box; }
+html { min-width: 320px; }
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: 'DM Sans', sans-serif; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
 
 .auth-page {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: minmax(320px, .86fr) minmax(440px, 1.14fr);
-    background: var(--paper);
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(320px, .86fr) minmax(440px, 1.14fr);
+  background: var(--paper);
 }
-
 .auth-art {
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(28px, 5vw, 72px);
+  color: #fff;
+  background: var(--plum);
+}
+.auth-art::before, .auth-art::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.auth-art::before { width: 430px; height: 430px; top: -130px; right: -150px; background: var(--orange); }
+.auth-art::after { width: 220px; height: 220px; bottom: 90px; left: -110px; background: var(--paper); }
+.art-grid {
+  position: absolute;
+  inset: 0;
+  opacity: .2;
+  background-image: linear-gradient(rgba(255,255,255,.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.4) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(to top, black, transparent 75%);
+}
+.art-content { position: relative; z-index: 1; max-width: 480px; }
+.eyebrow, .brand-mark { text-transform: uppercase; letter-spacing: .15em; font-size: 11px; font-weight: 700; }
+.art-title { max-width: 520px; margin: 18px 0; font-family: 'Space Grotesk', sans-serif; font-size: clamp(40px, 5vw, 72px); line-height: .96; letter-spacing: -.05em; }
+.art-copy { max-width: 390px; color: rgba(255,255,255,.75); font-size: 17px; line-height: 1.55; }
 
-    .company-logo {
-        display: block;
-        max-width: 180px;
-        max-height: 72px;
-        margin-bottom: 38px;
-        object-fit: contain;
-        object-position: left center;
-        display: flex;
-        align-items: flex-end;
-        padding: clamp(28px, 5vw, 72px);
-        color: #fffef7;
-        background: var(--plum);
-    }
+.auth-panel { display: grid; place-items: center; padding: 38px 7vw; }
+.auth-card { width: min(100%, 430px); }
+.company-logo { display: block; width: auto; max-width: 150px; height: 56px; margin: 0 0 38px; object-fit: contain; object-position: left center; }
+.auth-heading { margin: 0 0 10px; font-family: 'Space Grotesk', sans-serif; font-size: clamp(32px, 4vw, 48px); letter-spacing: -.05em; line-height: 1; }
+.auth-subtitle { margin: 0 0 32px; color: var(--muted); line-height: 1.5; }
+.field { display: block; margin-bottom: 17px; color: var(--ink); font-size: 13px; font-weight: 700; }
+.field input { width: 100%; margin-top: 8px; padding: 16px 17px; border: 1px solid var(--line); border-radius: 10px; outline: none; background: var(--surface); color: var(--ink); transition: border .2s, box-shadow .2s; }
+.field input:focus { border-color: var(--plum); box-shadow: 0 0 0 4px rgba(143,77,101,.14); }
+.primary-button, .secondary-button { border: 0; border-radius: 9px; padding: 15px 20px; font-weight: 700; transition: transform .2s, background .2s; }
+.primary-button { width: 100%; color: #fff; background: var(--orange); }
+.primary-button:hover { background: #d96e3d; transform: translateY(-1px); }
+.secondary-button { color: var(--ink); background: var(--paper); }
+.secondary-button:hover { transform: translateY(-1px); }
+.switch-mode { margin-top: 24px; color: var(--muted); text-align: center; font-size: 14px; }
+.text-button { padding: 0; border: 0; color: var(--plum); background: transparent; font-weight: 700; }
+.feedback { min-height: 22px; margin: 14px 0 0; font-size: 13px; line-height: 1.4; }
+.feedback.error { color: #b34234; }
+.feedback.success { color: var(--plum); }
 
-    .auth-art::before,
-    .auth-art::after {
-        content: '';
-        position: absolute;
-        border-radius: 50%;
-        pointer-events: none;
-    }
+.home-page { min-height: 100vh; }
+.topbar { display: flex; align-items: center; justify-content: space-between; padding: 26px clamp(24px, 6vw, 88px); }
+.logo-slot { display: inline-flex; align-items: center; justify-content: center; min-width: 116px; min-height: 42px; padding: 8px 14px; border: 1px dashed var(--plum); border-radius: 8px; color: var(--plum); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.logout-button { border: 1px solid var(--line); border-radius: 999px; padding: 10px 16px; color: var(--ink); background: transparent; font-size: 13px; font-weight: 700; }
+.logout-button:hover { border-color: var(--plum); color: var(--plum); }
+.home-main { width: min(1140px, calc(100% - 48px)); margin: 60px auto 0; }
+.home-kicker { color: var(--plum); font-size: 13px; font-weight: 700; }
+.home-title { max-width: 780px; margin: 14px 0 20px; font-family: 'Space Grotesk', sans-serif; font-size: clamp(45px, 8vw, 102px); line-height: .92; letter-spacing: -.07em; }
+.home-intro { max-width: 510px; color: var(--muted); font-size: 18px; line-height: 1.5; }
+.workspace { display: grid; grid-template-columns: 1.3fr .7fr; gap: 18px; margin: 76px 0; }
+.feature-panel, .small-panel { border-radius: 14px; box-shadow: var(--shadow); }
+.feature-panel { min-height: 270px; padding: 30px; color: #fff; background: var(--plum); }
+.feature-panel h2, .small-panel h3 { margin: 0 0 13px; font-family: 'Space Grotesk', sans-serif; letter-spacing: -.04em; }
+.feature-panel h2 { max-width: 460px; font-size: 38px; line-height: 1.03; }
+.feature-panel p { max-width: 410px; color: rgba(255,255,255,.75); line-height: 1.5; }
+.small-panel { padding: 26px; background: var(--surface); }
+.small-panel h3 { font-size: 23px; }
+.small-panel p { color: var(--muted); line-height: 1.5; }
+.account-email { overflow-wrap: anywhere; color: var(--plum) !important; font-weight: 700; }
 
-    .auth-art::before {
-        width: 430px;
-        height: 430px;
-        top: -130px;
-        right: -150px;
-        background: var(--orange);
-    }
-
-    .auth-art::after {
-        width: 220px;
-        height: 220px;
-        bottom: 90px;
-        left: -110px;
-        background: var(--paper);
-    }
-
-    .art-grid {
-        position: absolute;
-        inset: 0;
-        opacity: .22;
-        background-image: linear-gradient(rgba(255, 255, 255, .4) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .4) 1px, transparent 1px);
-        background-size: 34px 34px;
-        mask-image: linear-gradient(to top, black, transparent 75%);
-    }
-
-    .art-content {
-        position: relative;
-        z-index: 1;
-        max-width: 480px;
-    }
-
-    .eyebrow,
-    .brand-mark {
-        text-transform: uppercase;
-        letter-spacing: .15em;
-        font-size: 11px;
-        font-weight: 700;
-    }
-
-    .art-title {
-        max-width: 520px;
-        margin: 18px 0;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: clamp(40px, 5vw, 72px);
-        line-height: .96;
-        letter-spacing: -.05em;
-    }
-
-    .art-copy {
-        max-width: 390px;
-        color: rgba(255, 255, 255, .72);
-        font-size: 17px;
-        line-height: 1.55;
-    }
-
-    .auth-panel {
-        display: grid;
-        place-items: center;
-        padding: 38px 7vw;
-    }
-
-    .auth-card {
-        width: min(100%, 430px);
-    }
-
-    .brand-mark {
-        color: var(--plum);
-    }
-
-    .logo-slot {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 116px;
-        min-height: 42px;
-        padding: 8px 14px;
-        border: 1px dashed currentColor;
-        border-radius: 8px;
-        color: currentColor;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: .12em;
-        text-transform: uppercase;
-    }
-
-    .logo-slot img {
-        display: block;
-        max-width: 170px;
-        max-height: 48px;
-    }
-
-    .auth-heading {
-        margin: 55px 0 10px;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: clamp(32px, 4vw, 48px);
-        letter-spacing: -.05em;
-        line-height: 1;
-    }
-
-    .auth-subtitle {
-        margin: 0 0 32px;
-        color: var(--muted);
-        line-height: 1.5;
-    }
-
-    .field {
-        display: block;
-        margin-bottom: 17px;
-        color: var(--ink);
-        font-size: 13px;
-        font-weight: 700;
-    }
-
-    .field input {
-        width: 100%;
-        margin-top: 8px;
-        padding: 16px 17px;
-        border: 1px solid var(--line);
-        border-radius: 10px;
-        outline: none;
-        background: var(--surface);
-        color: var(--ink);
-        transition: border .2s, box-shadow .2s;
-    }
-
-    .field input:focus {
-        border-color: var(--plum);
-        box-shadow: 0 0 0 4px rgba(143, 77, 101, .14);
-    }
-
-    .primary-button,
-    .secondary-button {
-        border: 0;
-        border-radius: 9px;
-        padding: 15px 20px;
-        font-weight: 700;
-        transition: transform .2s, background .2s;
-    }
-
-    .primary-button {
-        width: 100%;
-        color: #fff;
-        background: var(--orange);
-    }
-
-    .primary-button:hover {
-        background: #d96e3d;
-        transform: translateY(-1px);
-    }
-
-    .secondary-button {
-        color: var(--ink);
-        background: var(--paper);
-    }
-
-    .secondary-button:hover {
-        transform: translateY(-1px);
-    }
-
-    .switch-mode {
-        margin-top: 24px;
-        color: var(--muted);
-        text-align: center;
-        font-size: 14px;
-    }
-
-    .text-button {
-        padding: 0;
-        border: 0;
-        color: var(--plum);
-        background: transparent;
-        font-weight: 700;
-    }
-
-    .feedback {
-        min-height: 22px;
-        margin: 14px 0 0;
-        font-size: 13px;
-        line-height: 1.4;
-    }
-
-    .feedback.error {
-        color: #b34234;
-    }
-
-    .feedback.success {
-        color: var(--plum);
-    }
-
-    .home-page {
-        min-height: 100vh;
-    }
-
-    .topbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 26px clamp(24px, 6vw, 88px);
-    }
-
-    .topbar .brand-mark {
-        font-size: 13px;
-    }
-
-    .logout-button {
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        padding: 10px 16px;
-        color: var(--ink);
-        background: transparent;
-        font-size: 13px;
-        font-weight: 700;
-    }
-
-    .logout-button:hover {
-        border-color: var(--plum);
-        color: var(--plum);
-    }
-
-    .home-main {
-        width: min(1140px, calc(100% - 48px));
-        margin: 60px auto 0;
-    }
-
-    .home-kicker {
-        color: var(--plum);
-        font-size: 13px;
-        font-weight: 700;
-    }
-
-    .home-title {
-        max-width: 780px;
-        margin: 14px 0 20px;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: clamp(45px, 8vw, 102px);
-        line-height: .92;
-        letter-spacing: -.07em;
-    }
-
-    .home-intro {
-        max-width: 510px;
-        color: var(--muted);
-        font-size: 18px;
-        line-height: 1.5;
-    }
-
-    .workspace {
-        display: grid;
-        grid-template-columns: 1.3fr .7fr;
-        gap: 18px;
-        margin: 76px 0;
-    }
-
-    .feature-panel,
-    .small-panel {
-        border-radius: 14px;
-        box-shadow: var(--shadow);
-    }
-
-    .feature-panel {
-        min-height: 270px;
-        padding: 30px;
-        color: #fff;
-        background: var(--plum);
-    }
-
-    .feature-panel h2,
-    .small-panel h3 {
-        margin: 0 0 13px;
-        font-family: 'Space Grotesk', sans-serif;
-        letter-spacing: -.04em;
-    }
-
-    .feature-panel h2 {
-        max-width: 460px;
-        font-size: 38px;
-        line-height: 1.03;
-    }
-
-    .feature-panel p {
-        max-width: 410px;
-        color: rgba(255, 255, 255, .72);
-        line-height: 1.5;
-    }
-
-    .small-panel {
-        padding: 26px;
-        background: var(--surface);
-    }
-
-    .small-panel h3 {
-        font-size: 23px;
-    }
-
-    .small-panel p {
-        color: var(--muted);
-        line-height: 1.5;
-    }
-
-    .account-email {
-        overflow-wrap: anywhere;
-        color: var(--plum) !important;
-        font-weight: 700;
-    }
-
-    @media (max-width: 780px) {
-        .auth-page {
-            display: block;
-        }
-
-        .auth-art {
-            min-height: 330px;
-            align-items: flex-end;
-        }
-
-        .art-title {
-            font-size: 45px;
-        }
-
-        .auth-panel {
-            min-height: 540px;
-            padding: 46px 24px;
-        }
-
-        .auth-heading {
-            margin-top: 0;
-        }
-
-        .workspace {
-            grid-template-columns: 1fr;
-            margin-top: 45px;
-        }
-
-        .home-main {
-            margin-top: 45px;
-        }
-    }
+@media (max-width: 780px) {
+  .auth-page { display: block; }
+  .auth-art { min-height: 330px; }
+  .art-title { font-size: 45px; }
+  .auth-panel { min-height: 540px; padding: 46px 24px; }
+  .workspace { grid-template-columns: 1fr; margin-top: 45px; }
+  .home-main { margin-top: 45px; }
+}
